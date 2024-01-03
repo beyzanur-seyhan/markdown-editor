@@ -122,3 +122,29 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+button,
+select {
+  outline: none;
+}
+
+select {
+  background-color: transparent;
+  border: transparent;
+  appearance: none;
+  background-image: url("../images/toolbar/arrow-down.svg");
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 20px;
+}

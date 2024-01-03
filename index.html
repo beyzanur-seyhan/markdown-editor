@@ -12,7 +12,7 @@
     <div class="editor_container">
       <div class="editor_left_area">
         <div class="editor_toolbar">
-          <div>
+          <div class="undo_redo">
             <button>
               <img src="images/toolbar/undo.svg" alt="Undo Icon" />
             </button>
@@ -24,23 +24,31 @@
             <select name="" id="">
               <option value="normal_text">Normal Text</option>
             </select>
-            <img src="images/toolbar/arrow-down.svg" alt="Arrow Down Icon" />
           </div>
           <div class="dropdown">
-            <select name="" id="">
-              <option value="text_align_left"></option>
-            </select>
+            <ul>
+              <li>
+                <img
+                  src="images/toolbar/text_align/left.svg"
+                  alt="Text Align Left Icon"
+                />
+              </li>
+              <img src="images/toolbar/arrow-down.svg" alt="Arrow Down" />
+            </ul>
           </div>
-          <div>
-            <select name="" id="">
-              <option value="color_purple"></option>
-            </select>
+          <div class="dropdown">
+            <ul class="dropdown_colors">
+              <li class="color_purple">
+                <div></div>
+              </li>
+              <img src="images/toolbar/arrow-down.svg" alt="Arrow Down" />
+            </ul>
           </div>
-          <div>
+          <div class="text_style">
             <button>B</button>
-            <button>I</button>
-            <button>U</button>
-            <button>S</button>
+            <button class="text_style_italic">I</button>
+            <button class="text_style_underline">U</button>
+            <button class="text_style_line_through">S</button>
             <button>
               <img src="images/toolbar/angle.svg" alt="Angle Icon" />
             </button>
@@ -51,7 +59,7 @@
               />
             </button>
           </div>
-          <div>
+          <div class="list">
             <button>
               <img
                 src="images/toolbar/list/bulletted.svg"
@@ -65,7 +73,7 @@
               />
             </button>
           </div>
-          <div>
+          <div class="etc">
             <button>
               <img src="images/toolbar/link.svg" alt="Link Icon" />
             </button>
@@ -92,7 +100,12 @@
         <div class="editor"></div>
       </div>
       <div class="editor_right_area">
-        <div class="output_toolbar"></div>
+        <div class="output_toolbar">
+          <button>
+            <img src="images/copy.svg" alt="Copy Icon" />
+            <span>Copy Text</span>
+          </button>
+        </div>
         <div class="output"></div>
       </div>
     </div>
