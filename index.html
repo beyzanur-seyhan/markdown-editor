@@ -45,7 +45,7 @@
             </ul>
           </div>
           <div class="text_style">
-            <button>B</button>
+            <button onclick="addTagToText('b')">B</button>
             <button class="text_style_italic">I</button>
             <button class="text_style_underline">U</button>
             <button class="text_style_line_through">S</button>
@@ -97,7 +97,7 @@
             </button>
           </div>
         </div>
-        <div class="editor"></div>
+        <div class="editor" id="divEditor" contenteditable="true"></div>
       </div>
       <div class="editor_right_area">
         <div class="output_toolbar">
