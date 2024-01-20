@@ -15,6 +15,14 @@ body {
   justify-content: center;
 }
 
+.editor {
+  padding: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: var(--third_color);
+  outline-color: var(--third_color);
+}
+
 .editor_container {
   display: flex;
   column-gap: 5px;
@@ -25,6 +33,7 @@ body {
 
 .editor_left_area {
   width: 724px;
+  flex-shrink: 0;
 }
 
 .editor_toolbar,
