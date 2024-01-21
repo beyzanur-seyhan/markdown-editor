@@ -1,5 +1,6 @@
 "use strict";
 let textInformations = [];
+let editorHTMLElements;
 let indexCounter = 0;
 let textStartIndex;
 let textEndIndex;
@@ -22,21 +23,37 @@ const addTagToText = (tag) => {
             `</${tag}>` +
             (text === null || text === void 0 ? void 0 : text.slice(textEndIndex, text.length));
 };
-const createTextInformation = (editorHTMLElements) => {
-    let currentHTMLNode = editorHTMLElements[indexCounter];
-    let currentHTMLText = editorHTMLElements.length == 1 ?
-        currentHTMLNode === null || currentHTMLNode === void 0 ? void 0 : currentHTMLNode.textContent : currentHTMLNode === null || currentHTMLNode === void 0 ? void 0 : currentHTMLNode.innerText;
+const getCurrentText = (index = indexCounter) => {
+    let currentHTMLText;
+    let currentHTMLNode = editorHTMLElements[index];
+    if (currentHTMLNode === null || currentHTMLNode === void 0 ? void 0 : currentHTMLNode.textContent) {
+        currentHTMLText = currentHTMLNode === null || currentHTMLNode === void 0 ? void 0 : currentHTMLNode.textContent;
+    }
+    else {
+        currentHTMLText = currentHTMLNode === null || currentHTMLNode === void 0 ? void 0 : currentHTMLNode.innerText;
+    }
+    return currentHTMLText;
+};
+const createTextInformation = () => {
+    let currentHTMLText = getCurrentText();
     return {
         index: indexCounter,
         text: currentHTMLText,
     };
 };
-document.addEventListener("keydown", (event) => {
-    let editorHTMLElements = divEditor.childNodes;
+document.addEventListener("keyup", (event) => {
+    editorHTMLElements = divEditor.childNodes;
     if (!editorHTMLElements)
         return;
     if (event.key == "Enter")
-        indexCounter = editorHTMLElements.length;
-    textInformations[indexCounter] = createTextInformation(editorHTMLElements);
-    console.log(textInformations);
+        indexCounter = editorHTMLElements.length - 1;
+    if (findChangedElIndex() > -1)
+        indexCounter = findChangedElIndex();
+    textInformations[indexCounter] = createTextInformation();
 });
+const findChangedElIndex = () => {
+    return [...editorHTMLElements].findIndex((_element, index) => {
+        var _a;
+        return (getCurrentText(index) != ((_a = textInformations[index]) === null || _a === void 0 ? void 0 : _a.text));
+    });
+};

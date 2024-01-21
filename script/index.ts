@@ -7,6 +7,7 @@ interface textInformations {
 }
 
 let textInformations: textInformations[] = [];
+let editorHTMLElements: any[];
 let indexCounter = 0;
 let textStartIndex: number;
 let textEndIndex: number;
@@ -31,25 +32,38 @@ const addTagToText = (tag: string) => {
     text?.slice(textEndIndex, text.length);
 };
 
-const createTextInformation = (editorHTMLElements:any):{index: number, text: string} => {
-  let currentHTMLNode = editorHTMLElements[indexCounter] as HTMLElement;
-  let currentHTMLText = editorHTMLElements.length == 1 ? 
-  currentHTMLNode?.textContent! : currentHTMLNode?.innerText!;
+const getCurrentText = (index:number = indexCounter) => {
+  let currentHTMLText: string;
+  let currentHTMLNode = editorHTMLElements[index] as HTMLElement;
+  
+  if(currentHTMLNode?.textContent) {
+    currentHTMLText = currentHTMLNode?.textContent!;
+  } else {
+    currentHTMLText = currentHTMLNode?.innerText!;
+  }
+  return currentHTMLText;
+}
 
+const createTextInformation = ():{index: number, text: string} => {
+  let currentHTMLText = getCurrentText();
   return {
     index: indexCounter,
     text: currentHTMLText,
   }
 }
 
-document.addEventListener("keydown", (event: KeyboardEvent) => {
-  let editorHTMLElements = divEditor.childNodes! as any;
+document.addEventListener("keyup", (event: KeyboardEvent) => {
+  editorHTMLElements = divEditor.childNodes! as any;
 
   if(!editorHTMLElements) return;
-  if(event.key == "Enter") indexCounter = editorHTMLElements.length 
+  if(event.key == "Enter") indexCounter = editorHTMLElements.length - 1;
+  if(findChangedElIndex() > -1) indexCounter = findChangedElIndex();
 
-  textInformations[indexCounter] = createTextInformation(editorHTMLElements);
-  console.log(textInformations)
+  textInformations[indexCounter] = createTextInformation();
 });
 
-
+const findChangedElIndex = () => {
+ return [...editorHTMLElements].findIndex((_element,index) => (
+  getCurrentText(index) != textInformations[index]?.text
+ ))
+}
