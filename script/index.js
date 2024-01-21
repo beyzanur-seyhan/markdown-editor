@@ -35,9 +35,8 @@ document.addEventListener("keydown", (event) => {
     let editorHTMLElements = divEditor.childNodes;
     if (!editorHTMLElements)
         return;
-    if (event.key == "Enter") {
-        indexCounter = !editorHTMLElements.length ?
-            0 : editorHTMLElements.length - 1;
-    }
+    if (event.key == "Enter")
+        indexCounter = editorHTMLElements.length;
     textInformations[indexCounter] = createTextInformation(editorHTMLElements);
+    console.log(textInformations);
 });
