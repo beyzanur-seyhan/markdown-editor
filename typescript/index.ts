@@ -73,17 +73,24 @@ const createTextChildList = () => {
   textInformation.children = splitTextToSubstr();
 };
 
+const getHtmlElementIndex = (elementIndex: number) => {
+  console.log(elementIndex);
+};
+
 const addTagToText = (tag: string) => {
+  console.log(textInformationList);
   let childElement: string | undefined;
   divEditor.innerHTML = "";
 
-  textInformationList.forEach((textInfo) => {
+  textInformationList.forEach((textInfo, index) => {
     childElement =
       textInfo.children && createChildElement(textInfo.children, tag);
 
-    divEditor.innerHTML += `<div>${
-      childElement?.length ? childElement : textInfo.text
-    }</div>`;
+    let divElement = document.createElement("div")! as HTMLDivElement;
+    divElement.addEventListener("click", () => getHtmlElementIndex(index));
+    divElement.innerHTML = childElement?.length ? childElement : textInfo.text;
+
+    divEditor.appendChild(divElement);
     childElement = "";
   });
 };

@@ -55,13 +55,20 @@ const createTextChildList = () => {
     textInformation = textInformationList[childIndex];
     textInformation.children = splitTextToSubstr();
 };
+const getHtmlElementIndex = (elementIndex) => {
+    console.log(elementIndex);
+};
 const addTagToText = (tag) => {
+    console.log(textInformationList);
     let childElement;
     divEditor.innerHTML = "";
-    textInformationList.forEach((textInfo) => {
+    textInformationList.forEach((textInfo, index) => {
         childElement =
             textInfo.children && createChildElement(textInfo.children, tag);
-        divEditor.innerHTML += `<div>${(childElement === null || childElement === void 0 ? void 0 : childElement.length) ? childElement : textInfo.text}</div>`;
+        let divElement = document.createElement("div");
+        divElement.addEventListener("click", () => getHtmlElementIndex(index));
+        divElement.innerHTML = (childElement === null || childElement === void 0 ? void 0 : childElement.length) ? childElement : textInfo.text;
+        divEditor.appendChild(divElement);
         childElement = "";
     });
 };
