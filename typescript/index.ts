@@ -73,7 +73,7 @@ const createTextChildList = () => {
   textInformation.children = splitTextToSubstr();
 };
 
-const getHtmlElementIndex = (elementIndex: number) => {
+const getClickedIndex = (elementIndex: number) => {
   console.log(elementIndex);
 };
 
@@ -87,7 +87,7 @@ const addTagToText = (tag: string) => {
       textInfo.children && createChildElement(textInfo.children, tag);
 
     let divElement = document.createElement("div")! as HTMLDivElement;
-    divElement.addEventListener("click", () => getHtmlElementIndex(index));
+    divElement.addEventListener("click", () => getClickedIndex(index));
     divElement.innerHTML = childElement?.length ? childElement : textInfo.text;
 
     divEditor.appendChild(divElement);
@@ -100,9 +100,10 @@ const createChildElement = (
   tag: string
 ): string => {
   let childElement = "";
-  children?.forEach((child) => {
+  children?.forEach((child, index) => {
     let childTag = !child.isSelectedText ? "span" : tag;
-    childElement += `<${childTag}>${child.childText}</${childTag}>`;
+    childElement += `<${childTag} 
+    onclick="getClickedIndex(${index})">${child.childText}</${childTag}>`;
   });
   return childElement;
 };

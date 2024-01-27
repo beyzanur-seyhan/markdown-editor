@@ -1,4 +1,3 @@
-"use strict";
 let selectedText;
 let textRange;
 let indexCounter = 0;
@@ -55,7 +54,7 @@ const createTextChildList = () => {
     textInformation = textInformationList[childIndex];
     textInformation.children = splitTextToSubstr();
 };
-const getHtmlElementIndex = (elementIndex) => {
+const getClickedIndex = (elementIndex) => {
     console.log(elementIndex);
 };
 const addTagToText = (tag) => {
@@ -66,7 +65,7 @@ const addTagToText = (tag) => {
         childElement =
             textInfo.children && createChildElement(textInfo.children, tag);
         let divElement = document.createElement("div");
-        divElement.addEventListener("click", () => getHtmlElementIndex(index));
+        divElement.addEventListener("click", () => getClickedIndex(index));
         divElement.innerHTML = (childElement === null || childElement === void 0 ? void 0 : childElement.length) ? childElement : textInfo.text;
         divEditor.appendChild(divElement);
         childElement = "";
@@ -74,9 +73,10 @@ const addTagToText = (tag) => {
 };
 const createChildElement = (children, tag) => {
     let childElement = "";
-    children === null || children === void 0 ? void 0 : children.forEach((child) => {
+    children === null || children === void 0 ? void 0 : children.forEach((child, index) => {
         let childTag = !child.isSelectedText ? "span" : tag;
-        childElement += `<${childTag}>${child.childText}</${childTag}>`;
+        childElement += `<${childTag} 
+    onclick="getClickedIndex(${index})">${child.childText}</${childTag}>`;
     });
     return childElement;
 };
