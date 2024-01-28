@@ -5,8 +5,10 @@ interface textInformation {
 }
 
 interface textInformationChild {
+  index?: string;
   childText: string;
   isSelectedText: boolean;
+  children?: textInformationChild[];
 }
 
 let selectedText: string;
@@ -56,6 +58,12 @@ const splitTextToSubstr = (): textInformationChild[] => {
   return textChildrenList;
 };
 
+const createChildIndex = () => {
+  textInformation.children?.forEach((child, index) => {
+    child.index = textInformation.index + "-" + index;
+  });
+};
+
 const isSplitText = (textIndex: number): boolean => {
   let result = false;
   if (
@@ -73,10 +81,6 @@ const createTextChildList = () => {
   textInformation.children = splitTextToSubstr();
 };
 
-const getClickedIndex = (elementIndex: number) => {
-  console.log(elementIndex);
-};
-
 const addTagToText = (tag: string) => {
   console.log(textInformationList);
   let childElement: string | undefined;
@@ -86,12 +90,9 @@ const addTagToText = (tag: string) => {
     childElement =
       textInfo.children && createChildElement(textInfo.children, tag);
 
-    let divElement = document.createElement("div")! as HTMLDivElement;
-    divElement.addEventListener("click", () => getClickedIndex(index));
-    divElement.innerHTML = childElement?.length ? childElement : textInfo.text;
-
-    divEditor.appendChild(divElement);
-    childElement = "";
+    divEditor.innerHTML += `<div id="${index}">${
+      childElement?.length ? childElement : textInfo.text
+    }</div>`;
   });
 };
 
@@ -100,10 +101,9 @@ const createChildElement = (
   tag: string
 ): string => {
   let childElement = "";
-  children?.forEach((child, index) => {
+  children?.forEach((child) => {
     let childTag = !child.isSelectedText ? "span" : tag;
-    childElement += `<${childTag} 
-    onclick="getClickedIndex(${index})">${child.childText}</${childTag}>`;
+    childElement += `<${childTag} id="${child.index}">${child.childText}</${childTag}>`;
   });
   return childElement;
 };

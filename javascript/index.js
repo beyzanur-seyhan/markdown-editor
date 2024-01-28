@@ -41,6 +41,12 @@ const splitTextToSubstr = () => {
     }
     return textChildrenList;
 };
+const createChildIndex = () => {
+    var _a;
+    (_a = textInformation.children) === null || _a === void 0 ? void 0 : _a.forEach((child, index) => {
+        child.index = textInformation.index + "-" + index;
+    });
+};
 const isSplitText = (textIndex) => {
     let result = false;
     if (textIndex == textEndIndex - 1 ||
@@ -54,9 +60,6 @@ const createTextChildList = () => {
     textInformation = textInformationList[childIndex];
     textInformation.children = splitTextToSubstr();
 };
-const getClickedIndex = (elementIndex) => {
-    console.log(elementIndex);
-};
 const addTagToText = (tag) => {
     console.log(textInformationList);
     let childElement;
@@ -64,19 +67,14 @@ const addTagToText = (tag) => {
     textInformationList.forEach((textInfo, index) => {
         childElement =
             textInfo.children && createChildElement(textInfo.children, tag);
-        let divElement = document.createElement("div");
-        divElement.addEventListener("click", () => getClickedIndex(index));
-        divElement.innerHTML = (childElement === null || childElement === void 0 ? void 0 : childElement.length) ? childElement : textInfo.text;
-        divEditor.appendChild(divElement);
-        childElement = "";
+        divEditor.innerHTML += `<div id="${index}">${(childElement === null || childElement === void 0 ? void 0 : childElement.length) ? childElement : textInfo.text}</div>`;
     });
 };
 const createChildElement = (children, tag) => {
     let childElement = "";
-    children === null || children === void 0 ? void 0 : children.forEach((child, index) => {
+    children === null || children === void 0 ? void 0 : children.forEach((child) => {
         let childTag = !child.isSelectedText ? "span" : tag;
-        childElement += `<${childTag} 
-    onclick="getClickedIndex(${index})">${child.childText}</${childTag}>`;
+        childElement += `<${childTag} id="${child.index}">${child.childText}</${childTag}>`;
     });
     return childElement;
 };
