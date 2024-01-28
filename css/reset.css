@@ -148,3 +148,7 @@ select {
   background-position: right center;
   padding-right: 20px;
 }
+
+b {
+  font-weight: bolder;
+}
