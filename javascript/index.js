@@ -1,5 +1,6 @@
 let selectedText;
 let textRange;
+let childIndexCounter = 0;
 let indexCounter = 0;
 let childIndex = 0;
 let textInformationList = [];
@@ -8,7 +9,7 @@ let editorHTMLElements;
 let textStartIndex;
 let textEndIndex;
 const divEditor = document.querySelector("#divEditor");
-divEditor.addEventListener("mouseup", () => {
+divEditor.addEventListener("mouseup", (event) => {
     document.addEventListener("selectionchange", () => {
         var _a, _b;
         textRange = (_a = window.getSelection()) === null || _a === void 0 ? void 0 : _a.getRangeAt(0);
@@ -43,8 +44,9 @@ const splitTextToSubstr = () => {
 };
 const createChildIndex = () => {
     var _a;
-    (_a = textInformation.children) === null || _a === void 0 ? void 0 : _a.forEach((child, index) => {
-        child.index = textInformation.index + "-" + index;
+    (_a = textInformation.children) === null || _a === void 0 ? void 0 : _a.forEach((child) => {
+        child.index = `child_${childIndexCounter}`;
+        childIndexCounter = childIndexCounter + 1;
     });
 };
 const isSplitText = (textIndex) => {
@@ -61,7 +63,7 @@ const createTextChildList = () => {
     textInformation.children = splitTextToSubstr();
 };
 const addTagToText = (tag) => {
-    console.log(textInformationList);
+    console.log(textInformationList, editorHTMLElements);
     let childElement;
     divEditor.innerHTML = "";
     textInformationList.forEach((textInfo, index) => {

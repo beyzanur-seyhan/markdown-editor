@@ -13,6 +13,7 @@ interface textInformationChild {
 
 let selectedText: string;
 let textRange: Range;
+let childIndexCounter = 0;
 let indexCounter = 0;
 let childIndex = 0;
 let textInformationList: textInformation[] = [];
@@ -22,7 +23,7 @@ let textStartIndex: number;
 let textEndIndex: number;
 const divEditor = document.querySelector("#divEditor")! as HTMLDivElement;
 
-divEditor.addEventListener("mouseup", () => {
+divEditor.addEventListener("mouseup", (event: Event) => {
   document.addEventListener("selectionchange", () => {
     textRange = window.getSelection()?.getRangeAt(0)!;
     textStartIndex = textRange.startOffset;
@@ -59,8 +60,9 @@ const splitTextToSubstr = (): textInformationChild[] => {
 };
 
 const createChildIndex = () => {
-  textInformation.children?.forEach((child, index) => {
-    child.index = textInformation.index + "-" + index;
+  textInformation.children?.forEach((child) => {
+    child.index = `child_${childIndexCounter}`;
+    childIndexCounter = childIndexCounter + 1;
   });
 };
 
@@ -82,7 +84,7 @@ const createTextChildList = () => {
 };
 
 const addTagToText = (tag: string) => {
-  console.log(textInformationList);
+  console.log(textInformationList, editorHTMLElements);
   let childElement: string | undefined;
   divEditor.innerHTML = "";
 
