@@ -1,7 +1,9 @@
+let targetHTMLElement;
 let selectedText;
 let textRange;
 let childIndexCounter = 0;
 let indexCounter = 0;
+let selectedChildObj;
 let childIndex = 0;
 let textInformationList = [];
 let textInformation;
@@ -10,6 +12,9 @@ let textStartIndex;
 let textEndIndex;
 const divEditor = document.querySelector("#divEditor");
 divEditor.addEventListener("mouseup", (event) => {
+    targetHTMLElement = event.target;
+    selectedChildObj = findEqualChildren(targetHTMLElement.id);
+    console.log(selectedChildObj);
     document.addEventListener("selectionchange", () => {
         var _a, _b;
         textRange = (_a = window.getSelection()) === null || _a === void 0 ? void 0 : _a.getRangeAt(0);
@@ -18,6 +23,10 @@ divEditor.addEventListener("mouseup", (event) => {
         selectedText = (_b = window.getSelection()) === null || _b === void 0 ? void 0 : _b.toString();
     });
 });
+const findEqualChildren = (childIndex) => {
+    var _a;
+    return (_a = textInformation === null || textInformation === void 0 ? void 0 : textInformation.children) === null || _a === void 0 ? void 0 : _a.find((child) => child.index == childIndex);
+};
 divEditor.addEventListener("mousedown", () => {
     for (let index = 0, len = divEditor.childNodes.length; index < len; index++) {
         divEditor.childNodes[index].onclick = function () {
@@ -25,15 +34,15 @@ divEditor.addEventListener("mousedown", () => {
         };
     }
 });
-const splitTextToSubstr = () => {
+const splitTextToSubstr = (tag) => {
     let str = "";
     let counter = 0;
     let textChildrenList = [];
     for (let i = 0; i < textInformation.text.length; i++) {
         str += textInformation.text[i];
         textChildrenList[counter] = {
-            childText: str,
-            isSelectedText: str == selectedText ? true : false,
+            text: str,
+            elementTag: str == selectedText ? tag : "span",
         };
         if (!isSplitText(i))
             continue;
@@ -58,27 +67,24 @@ const isSplitText = (textIndex) => {
     }
     return result;
 };
-const createTextChildList = () => {
-    textInformation = textInformationList[childIndex];
-    textInformation.children = splitTextToSubstr();
+const createTextChildList = (tag) => {
+    textInformation = selectedChildObj
+        ? selectedChildObj
+        : textInformationList[childIndex];
+    textInformation.children = splitTextToSubstr(tag);
 };
-const addTagToText = (tag) => {
+const addTagToText = () => {
+    var _a;
     console.log(textInformationList, editorHTMLElements);
-    let childElement;
-    divEditor.innerHTML = "";
-    textInformationList.forEach((textInfo, index) => {
-        childElement =
-            textInfo.children && createChildElement(textInfo.children, tag);
-        divEditor.innerHTML += `<div id="${index}">${(childElement === null || childElement === void 0 ? void 0 : childElement.length) ? childElement : textInfo.text}</div>`;
-    });
-};
-const createChildElement = (children, tag) => {
     let childElement = "";
-    children === null || children === void 0 ? void 0 : children.forEach((child) => {
-        let childTag = !child.isSelectedText ? "span" : tag;
-        childElement += `<${childTag} id="${child.index}">${child.childText}</${childTag}>`;
+    (_a = textInformation.children) === null || _a === void 0 ? void 0 : _a.forEach((children) => {
+        let childTag = children.elementTag;
+        childElement += `<${childTag} id="${children.index}">${children.text}</${childTag}>`;
+        targetHTMLElement.innerHTML =
+            targetHTMLElement.id != "divEditor"
+                ? childElement
+                : `<div id="${indexCounter}">${childElement}</div>`;
     });
-    return childElement;
 };
 const getCurrentText = (index = indexCounter) => {
     let currentHTMLText;
@@ -104,7 +110,9 @@ document.addEventListener("keyup", (event) => {
         return;
     if (event.key == "Enter") {
         indexCounter = editorHTMLElements.length - 1;
-        editorHTMLElements[indexCounter].innerHTML = `<br />`;
+        let editorHTMLElement = editorHTMLElements[indexCounter];
+        editorHTMLElement.innerHTML = `<br />`;
+        editorHTMLElement.id = indexCounter.toString();
     }
     if (findChangedElIndex() > -1)
         indexCounter = findChangedElIndex();

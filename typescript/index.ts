@@ -6,24 +6,31 @@ interface textInformation {
 
 interface textInformationChild {
   index?: string;
-  childText: string;
-  isSelectedText: boolean;
+  text: string;
+  elementTag: string;
   children?: textInformationChild[];
 }
 
+let targetHTMLElement: HTMLElement;
 let selectedText: string;
 let textRange: Range;
 let childIndexCounter = 0;
 let indexCounter = 0;
+let selectedChildObj: textInformationChild | undefined;
 let childIndex = 0;
 let textInformationList: textInformation[] = [];
-let textInformation: textInformation;
-let editorHTMLElements: any[];
+let textInformation: textInformation | textInformationChild;
+let editorHTMLElements: NodeList;
 let textStartIndex: number;
 let textEndIndex: number;
 const divEditor = document.querySelector("#divEditor")! as HTMLDivElement;
 
 divEditor.addEventListener("mouseup", (event: Event) => {
+  targetHTMLElement = event.target as HTMLElement;
+  selectedChildObj = findEqualChildren(targetHTMLElement.id);
+
+  console.log(selectedChildObj);
+
   document.addEventListener("selectionchange", () => {
     textRange = window.getSelection()?.getRangeAt(0)!;
     textStartIndex = textRange.startOffset;
@@ -31,6 +38,10 @@ divEditor.addEventListener("mouseup", (event: Event) => {
     selectedText = window.getSelection()?.toString()!;
   });
 });
+
+const findEqualChildren = (childIndex: string): textInformationChild => {
+  return textInformation?.children?.find((child) => child.index == childIndex);
+};
 
 divEditor.addEventListener("mousedown", () => {
   for (let index = 0, len = divEditor.childNodes.length; index < len; index++) {
@@ -40,7 +51,7 @@ divEditor.addEventListener("mousedown", () => {
   }
 });
 
-const splitTextToSubstr = (): textInformationChild[] => {
+const splitTextToSubstr = (tag: string): textInformationChild[] => {
   let str = "";
   let counter = 0;
   let textChildrenList: textInformationChild[] = [];
@@ -48,8 +59,8 @@ const splitTextToSubstr = (): textInformationChild[] => {
   for (let i = 0; i < textInformation.text.length; i++) {
     str += textInformation.text[i];
     textChildrenList[counter] = {
-      childText: str,
-      isSelectedText: str == selectedText ? true : false,
+      text: str,
+      elementTag: str == selectedText ? tag : "span",
     };
 
     if (!isSplitText(i)) continue;
@@ -78,41 +89,31 @@ const isSplitText = (textIndex: number): boolean => {
   return result;
 };
 
-const createTextChildList = () => {
-  textInformation = textInformationList[childIndex];
-  textInformation.children = splitTextToSubstr();
+const createTextChildList = (tag: string) => {
+  textInformation = selectedChildObj
+    ? selectedChildObj
+    : textInformationList[childIndex];
+  textInformation.children = splitTextToSubstr(tag);
 };
 
-const addTagToText = (tag: string) => {
+const addTagToText = () => {
   console.log(textInformationList, editorHTMLElements);
-  let childElement: string | undefined;
-  divEditor.innerHTML = "";
-
-  textInformationList.forEach((textInfo, index) => {
-    childElement =
-      textInfo.children && createChildElement(textInfo.children, tag);
-
-    divEditor.innerHTML += `<div id="${index}">${
-      childElement?.length ? childElement : textInfo.text
-    }</div>`;
-  });
-};
-
-const createChildElement = (
-  children: textInformationChild[],
-  tag: string
-): string => {
   let childElement = "";
-  children?.forEach((child) => {
-    let childTag = !child.isSelectedText ? "span" : tag;
-    childElement += `<${childTag} id="${child.index}">${child.childText}</${childTag}>`;
+
+  textInformation.children?.forEach((children) => {
+    let childTag = children.elementTag;
+    childElement += `<${childTag} id="${children.index}">${children.text}</${childTag}>`;
+
+    targetHTMLElement.innerHTML =
+      targetHTMLElement.id != "divEditor"
+        ? childElement
+        : `<div id="${indexCounter}">${childElement}</div>`;
   });
-  return childElement;
 };
 
 const getCurrentText = (index: number = indexCounter) => {
   let currentHTMLText: string;
-  let currentHTMLNode = editorHTMLElements[index] as HTMLElement;
+  let currentHTMLNode = editorHTMLElements[index] as unknown as HTMLElement;
 
   if (currentHTMLNode?.textContent) {
     currentHTMLText = currentHTMLNode?.textContent!;
@@ -131,12 +132,16 @@ const createTextInformation = (): { index: number; text: string } => {
 };
 
 document.addEventListener("keyup", (event: KeyboardEvent) => {
-  editorHTMLElements = divEditor.childNodes! as any;
+  editorHTMLElements = divEditor.childNodes! as NodeList;
 
   if (!editorHTMLElements) return;
   if (event.key == "Enter") {
     indexCounter = editorHTMLElements.length - 1;
-    editorHTMLElements[indexCounter].innerHTML = `<br />`;
+    let editorHTMLElement = editorHTMLElements[
+      indexCounter
+    ] as unknown as HTMLElement;
+    editorHTMLElement.innerHTML = `<br />`;
+    editorHTMLElement.id = indexCounter.toString();
   }
   if (findChangedElIndex() > -1) indexCounter = findChangedElIndex();
   textInformationList[indexCounter] = createTextInformation();
