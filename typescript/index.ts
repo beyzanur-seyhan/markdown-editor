@@ -11,7 +11,9 @@ interface textInformationChild {
   children?: textInformationChild[];
 }
 
+let eqaulChild: textInformationChild | undefined;
 let targetHTMLElement: HTMLElement;
+let targetHTMLElementId: string;
 let selectedText: string;
 let textRange: Range;
 let childIndexCounter = 0;
@@ -27,8 +29,11 @@ const divEditor = document.querySelector("#divEditor")! as HTMLDivElement;
 
 divEditor.addEventListener("mouseup", (event: Event) => {
   targetHTMLElement = event.target as HTMLElement;
-  selectedChildObj = findEqualChildren(targetHTMLElement.id);
-
+  targetHTMLElementId = targetHTMLElement.id;
+  selectedChildObj = textInformationList[childIndex]?.children
+    ? findEqualChildren(textInformationList[childIndex]?.children)
+    : undefined;
+  eqaulChild = undefined;
   console.log(selectedChildObj);
 
   document.addEventListener("selectionchange", () => {
@@ -39,10 +44,6 @@ divEditor.addEventListener("mouseup", (event: Event) => {
   });
 });
 
-const findEqualChildren = (childIndex: string): textInformationChild => {
-  return textInformation?.children?.find((child) => child.index == childIndex);
-};
-
 divEditor.addEventListener("mousedown", () => {
   for (let index = 0, len = divEditor.childNodes.length; index < len; index++) {
     (divEditor.childNodes[index] as HTMLElement).onclick = function () {
@@ -50,6 +51,24 @@ divEditor.addEventListener("mousedown", () => {
     };
   }
 });
+
+const isEqalChildIndex = (child: textInformationChild, index: string) => {
+  let result = false;
+  if (index == targetHTMLElementId) {
+    eqaulChild = child;
+    result = true;
+  }
+  return result;
+};
+
+const findEqualChildren = (children: textInformationChild[]) => {
+  children?.forEach((child) => {
+    if (eqaulChild) return;
+    if (isEqalChildIndex(child, child.index)) return;
+    if (child.children) findEqualChildren(child.children);
+  });
+  return eqaulChild;
+};
 
 const splitTextToSubstr = (tag: string): textInformationChild[] => {
   let str = "";

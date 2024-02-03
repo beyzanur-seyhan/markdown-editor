@@ -1,4 +1,6 @@
+let eqaulChild;
 let targetHTMLElement;
+let targetHTMLElementId;
 let selectedText;
 let textRange;
 let childIndexCounter = 0;
@@ -12,8 +14,13 @@ let textStartIndex;
 let textEndIndex;
 const divEditor = document.querySelector("#divEditor");
 divEditor.addEventListener("mouseup", (event) => {
+    var _a, _b;
     targetHTMLElement = event.target;
-    selectedChildObj = findEqualChildren(targetHTMLElement.id);
+    targetHTMLElementId = targetHTMLElement.id;
+    selectedChildObj = ((_a = textInformationList[childIndex]) === null || _a === void 0 ? void 0 : _a.children)
+        ? findEqualChildren((_b = textInformationList[childIndex]) === null || _b === void 0 ? void 0 : _b.children)
+        : undefined;
+    eqaulChild = undefined;
     console.log(selectedChildObj);
     document.addEventListener("selectionchange", () => {
         var _a, _b;
@@ -23,10 +30,6 @@ divEditor.addEventListener("mouseup", (event) => {
         selectedText = (_b = window.getSelection()) === null || _b === void 0 ? void 0 : _b.toString();
     });
 });
-const findEqualChildren = (childIndex) => {
-    var _a;
-    return (_a = textInformation === null || textInformation === void 0 ? void 0 : textInformation.children) === null || _a === void 0 ? void 0 : _a.find((child) => child.index == childIndex);
-};
 divEditor.addEventListener("mousedown", () => {
     for (let index = 0, len = divEditor.childNodes.length; index < len; index++) {
         divEditor.childNodes[index].onclick = function () {
@@ -34,6 +37,25 @@ divEditor.addEventListener("mousedown", () => {
         };
     }
 });
+const isEqalChildIndex = (child, index) => {
+    let result = false;
+    if (index == targetHTMLElementId) {
+        eqaulChild = child;
+        result = true;
+    }
+    return result;
+};
+const findEqualChildren = (children) => {
+    children === null || children === void 0 ? void 0 : children.forEach((child) => {
+        if (eqaulChild)
+            return;
+        if (isEqalChildIndex(child, child.index))
+            return;
+        if (child.children)
+            findEqualChildren(child.children);
+    });
+    return eqaulChild;
+};
 const splitTextToSubstr = (tag) => {
     let str = "";
     let counter = 0;
