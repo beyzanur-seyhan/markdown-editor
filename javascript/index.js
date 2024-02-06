@@ -1,3 +1,6 @@
+let currentHTMLElement;
+let htmlText;
+let selectedHtmlElement;
 let eqaulChild;
 let targetHTMLElement;
 let targetHTMLElementId;
@@ -13,15 +16,25 @@ let editorHTMLElements;
 let textStartIndex;
 let textEndIndex;
 const divEditor = document.querySelector("#divEditor");
-divEditor.addEventListener("mouseup", (event) => {
-    var _a, _b;
-    targetHTMLElement = event.target;
-    targetHTMLElementId = targetHTMLElement.id;
-    selectedChildObj = ((_a = textInformationList[childIndex]) === null || _a === void 0 ? void 0 : _a.children)
-        ? findEqualChildren((_b = textInformationList[childIndex]) === null || _b === void 0 ? void 0 : _b.children)
-        : undefined;
-    eqaulChild = undefined;
-    console.log(selectedChildObj);
+const getSelectedElement = () => {
+    let htmlElement;
+    let childNode = currentHTMLElement.childNodes;
+    if (childNode.length == 1 && childNode[0].nodeName == "#text") {
+        htmlElement = editorHTMLElements[targetHTMLElementId];
+    }
+    else {
+        htmlElement = document.getElementById(targetHTMLElementId);
+    }
+    return htmlElement;
+};
+divEditor.addEventListener("click", (event) => {
+    if (!editorHTMLElements)
+        return;
+    currentHTMLElement = editorHTMLElements[childIndex];
+    targetHTMLElementId = event.target.id;
+    selectedHtmlElement = getSelectedElement();
+});
+divEditor.addEventListener("mouseup", () => {
     document.addEventListener("selectionchange", () => {
         var _a, _b;
         textRange = (_a = window.getSelection()) === null || _a === void 0 ? void 0 : _a.getRangeAt(0);
@@ -45,38 +58,10 @@ const isEqalChildIndex = (child, index) => {
     }
     return result;
 };
-const findEqualChildren = (children) => {
-    children === null || children === void 0 ? void 0 : children.forEach((child) => {
-        if (eqaulChild)
-            return;
-        if (isEqalChildIndex(child, child.index))
-            return;
-        if (child.children)
-            findEqualChildren(child.children);
-    });
-    return eqaulChild;
-};
-const splitTextToSubstr = (tag) => {
-    let str = "";
-    let counter = 0;
-    let textChildrenList = [];
-    for (let i = 0; i < textInformation.text.length; i++) {
-        str += textInformation.text[i];
-        textChildrenList[counter] = {
-            text: str,
-            elementTag: str == selectedText ? tag : "span",
-        };
-        if (!isSplitText(i))
-            continue;
-        str = "";
-        counter++;
-    }
-    return textChildrenList;
-};
-const createChildIndex = () => {
+const createIdForChild = () => {
     var _a;
-    (_a = textInformation.children) === null || _a === void 0 ? void 0 : _a.forEach((child) => {
-        child.index = `child_${childIndexCounter}`;
+    (_a = selectedHtmlElement.childNodes) === null || _a === void 0 ? void 0 : _a.forEach((child) => {
+        child.id = `child_${childIndexCounter}`;
         childIndexCounter = childIndexCounter + 1;
     });
 };
@@ -89,58 +74,46 @@ const isSplitText = (textIndex) => {
     }
     return result;
 };
-const createTextChildList = (tag) => {
-    textInformation = selectedChildObj
-        ? selectedChildObj
-        : textInformationList[childIndex];
-    textInformation.children = splitTextToSubstr(tag);
-};
-const addTagToText = () => {
-    var _a;
-    console.log(textInformationList, editorHTMLElements);
-    let childElement = "";
-    (_a = textInformation.children) === null || _a === void 0 ? void 0 : _a.forEach((children) => {
-        let childTag = children.elementTag;
-        childElement += `<${childTag} id="${children.index}">${children.text}</${childTag}>`;
-        targetHTMLElement.innerHTML =
-            targetHTMLElement.id != "divEditor"
-                ? childElement
-                : `<div id="${indexCounter}">${childElement}</div>`;
-    });
-};
-const getCurrentText = (index = indexCounter) => {
-    let currentHTMLText;
-    let currentHTMLNode = editorHTMLElements[index];
-    if (currentHTMLNode === null || currentHTMLNode === void 0 ? void 0 : currentHTMLNode.textContent) {
-        currentHTMLText = currentHTMLNode === null || currentHTMLNode === void 0 ? void 0 : currentHTMLNode.textContent;
+const splitTextToSubArray = (tag) => {
+    let str = "";
+    let counter = 0;
+    let childNode = [];
+    let htmlText = selectedHtmlElement.innerText;
+    selectedHtmlElement.innerHTML = "";
+    for (let i = 0; i < htmlText.length; i++) {
+        str += htmlText[i];
+        let elementTag = str == selectedText ? tag : "span";
+        let createdHtmlElement = document.createElement(elementTag);
+        createdHtmlElement.innerHTML = str;
+        childNode[counter] = createdHtmlElement;
+        if (!isSplitText(i))
+            continue;
+        str = "";
+        counter++;
     }
-    else {
-        currentHTMLText = currentHTMLNode === null || currentHTMLNode === void 0 ? void 0 : currentHTMLNode.innerText;
-    }
-    return currentHTMLText;
+    return childNode;
 };
-const createTextInformation = () => {
-    let currentHTMLText = getCurrentText();
-    return {
-        index: indexCounter,
-        text: currentHTMLText,
-    };
+const addTagToHtmlText = (tag) => {
+    selectedHtmlElement.append(...splitTextToSubArray(tag));
 };
 document.addEventListener("keyup", (event) => {
     editorHTMLElements = divEditor.childNodes;
+    let editorHTMLElement;
     if (!editorHTMLElements)
         return;
     if (event.key == "Enter") {
         indexCounter = editorHTMLElements.length - 1;
-        let editorHTMLElement = editorHTMLElements[indexCounter];
+        editorHTMLElement = editorHTMLElements[indexCounter];
         editorHTMLElement.innerHTML = `<br />`;
         editorHTMLElement.id = indexCounter.toString();
     }
-    if (findChangedElIndex() > -1)
-        indexCounter = findChangedElIndex();
-    textInformationList[indexCounter] = createTextInformation();
 });
-const findChangedElIndex = () => {
-    return [...editorHTMLElements].findIndex((_element, index) => { var _a; return getCurrentText(index) != ((_a = textInformationList[index]) === null || _a === void 0 ? void 0 : _a.text); });
-};
+divEditor.addEventListener("focus", () => {
+    if (divEditor.innerHTML.trim() == "") {
+        let div = document.createElement("div");
+        div.id = "0";
+        div.innerHTML = "<br />";
+        divEditor.append(div);
+    }
+});
 //# sourceMappingURL=index.js.map

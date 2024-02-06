@@ -45,15 +45,16 @@
             </ul>
           </div>
           <div class="text_style">
-            <button
-              onclick="createTextChildList('b');createChildIndex();addTagToText('b');"
-            >
+            <button onclick="addTagToHtmlText('b');createIdForChild();">
               B
             </button>
-            <button class="text_style_italic" onclick="addTagToText('i')">
+            <button class="text_style_italic" onclick="addTagToHtmlText('i')">
               I
             </button>
-            <button class="text_style_underline" onclick="addTagToText('u')">
+            <button
+              class="text_style_underline"
+              onclick="addTagToHtmlText('u')"
+            >
               U
             </button>
             <button class="text_style_line_through">S</button>
