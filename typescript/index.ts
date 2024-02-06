@@ -1,33 +1,21 @@
-interface textInformation {
-  index: number;
-  text: string;
-  children?: textInformationChild[];
-}
-
-interface textInformationChild {
-  index?: string;
-  text: string;
-  elementTag: string;
-  children?: textInformationChild[];
-}
-
 let currentHTMLElement: Node;
-let htmlText: string;
+let editorHTMLElements: NodeList;
+
 let selectedHtmlElement: HTMLElement;
-let eqaulChild: textInformationChild | undefined;
 let targetHTMLElement: HTMLElement;
+
+let textStartIndex: number;
+let textEndIndex: number;
+
+let htmlText: string;
 let targetHTMLElementId: string;
 let selectedText: string;
 let textRange: Range;
+
 let childIndexCounter = 0;
 let indexCounter = 0;
-let selectedChildObj: textInformationChild | undefined;
 let childIndex = 0;
-let textInformationList: textInformation[] = [];
-let textInformation: textInformation | textInformationChild;
-let editorHTMLElements: NodeList;
-let textStartIndex: number;
-let textEndIndex: number;
+
 const divEditor = document.querySelector("#divEditor")! as HTMLDivElement;
 
 const getSelectedElement = () => {
@@ -66,15 +54,6 @@ divEditor.addEventListener("mousedown", () => {
     };
   }
 });
-
-const isEqalChildIndex = (child: textInformationChild, index: string) => {
-  let result = false;
-  if (index == targetHTMLElementId) {
-    eqaulChild = child;
-    result = true;
-  }
-  return result;
-};
 
 const createIdForChild = () => {
   selectedHtmlElement.childNodes?.forEach((child: HTMLElement) => {

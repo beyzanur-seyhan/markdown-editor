@@ -1,20 +1,16 @@
 let currentHTMLElement;
-let htmlText;
+let editorHTMLElements;
 let selectedHtmlElement;
-let eqaulChild;
 let targetHTMLElement;
+let textStartIndex;
+let textEndIndex;
+let htmlText;
 let targetHTMLElementId;
 let selectedText;
 let textRange;
 let childIndexCounter = 0;
 let indexCounter = 0;
-let selectedChildObj;
 let childIndex = 0;
-let textInformationList = [];
-let textInformation;
-let editorHTMLElements;
-let textStartIndex;
-let textEndIndex;
 const divEditor = document.querySelector("#divEditor");
 const getSelectedElement = () => {
     let htmlElement;
@@ -50,14 +46,6 @@ divEditor.addEventListener("mousedown", () => {
         };
     }
 });
-const isEqalChildIndex = (child, index) => {
-    let result = false;
-    if (index == targetHTMLElementId) {
-        eqaulChild = child;
-        result = true;
-    }
-    return result;
-};
 const createIdForChild = () => {
     var _a;
     (_a = selectedHtmlElement.childNodes) === null || _a === void 0 ? void 0 : _a.forEach((child) => {
