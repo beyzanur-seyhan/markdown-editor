@@ -1,10 +1,8 @@
 let currentHTMLElement;
 let editorHTMLElements;
 let selectedHtmlElement;
-let targetHTMLElement;
 let textStartIndex;
 let textEndIndex;
-let htmlText;
 let targetHTMLElementId;
 let selectedText;
 let textRange;
@@ -30,7 +28,7 @@ divEditor.addEventListener("click", (event) => {
     targetHTMLElementId = event.target.id;
     selectedHtmlElement = getSelectedElement();
 });
-divEditor.addEventListener("mouseup", () => {
+divEditor.addEventListener("mouseup", (event) => {
     document.addEventListener("selectionchange", () => {
         var _a, _b;
         textRange = (_a = window.getSelection()) === null || _a === void 0 ? void 0 : _a.getRangeAt(0);
@@ -65,8 +63,8 @@ const isSplitText = (textIndex) => {
 const splitTextToSubArray = (tag) => {
     let str = "";
     let counter = 0;
-    let childNode = [];
-    let htmlText = selectedHtmlElement.innerText;
+    const childNode = [];
+    const htmlText = selectedHtmlElement.innerText;
     selectedHtmlElement.innerHTML = "";
     for (let i = 0; i < htmlText.length; i++) {
         str += htmlText[i];
@@ -86,19 +84,18 @@ const addTagToHtmlText = (tag) => {
 };
 document.addEventListener("keyup", (event) => {
     editorHTMLElements = divEditor.childNodes;
-    let editorHTMLElement;
     if (!editorHTMLElements)
         return;
     if (event.key == "Enter") {
         indexCounter = editorHTMLElements.length - 1;
-        editorHTMLElement = editorHTMLElements[indexCounter];
+        const editorHTMLElement = editorHTMLElements[indexCounter];
         editorHTMLElement.innerHTML = `<br />`;
         editorHTMLElement.id = indexCounter.toString();
     }
 });
 divEditor.addEventListener("focus", () => {
     if (divEditor.innerHTML.trim() == "") {
-        let div = document.createElement("div");
+        const div = document.createElement("div");
         div.id = "0";
         div.innerHTML = "<br />";
         divEditor.append(div);
