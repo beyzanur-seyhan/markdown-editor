@@ -10,31 +10,14 @@ let childIndexCounter = 0;
 let indexCounter = 0;
 let childIndex = 0;
 const divEditor = document.querySelector("#divEditor");
-const getSelectedElement = () => {
-    let htmlElement;
-    let childNode = currentHTMLElement.childNodes;
-    if (childNode.length == 1 && childNode[0].nodeName == "#text") {
-        htmlElement = editorHTMLElements[targetHTMLElementId];
-    }
-    else {
-        htmlElement = document.getElementById(targetHTMLElementId);
-    }
-    return htmlElement;
-};
-divEditor.addEventListener("click", (event) => {
-    if (!editorHTMLElements)
-        return;
-    currentHTMLElement = editorHTMLElements[childIndex];
-    targetHTMLElementId = event.target.id;
-    selectedHtmlElement = getSelectedElement();
-});
-divEditor.addEventListener("mouseup", (event) => {
+divEditor.addEventListener("mouseup", () => {
     document.addEventListener("selectionchange", () => {
-        var _a, _b;
-        textRange = (_a = window.getSelection()) === null || _a === void 0 ? void 0 : _a.getRangeAt(0);
+        let selection = window.getSelection();
+        selectedHtmlElement = selection.focusNode.parentElement;
+        textRange = selection.getRangeAt(0);
         textStartIndex = textRange.startOffset;
         textEndIndex = textRange.endOffset;
-        selectedText = (_b = window.getSelection()) === null || _b === void 0 ? void 0 : _b.toString();
+        selectedText = selection.toString();
     });
 });
 divEditor.addEventListener("mousedown", () => {
