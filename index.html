@@ -13,14 +13,19 @@
       <div class="editor_left_area">
         <div class="editor_toolbar">
           <div class="undo_redo">
-            <button>
+            <button title="undo">
               <img src="images/toolbar/undo.svg" alt="Undo Icon" />
             </button>
-            <button>
+            <button title="redo">
               <img src="images/toolbar/redo.svg" alt="Redo Icon" />
             </button>
           </div>
           <div class="dropdown">
+            <select name="" id="">
+              <option value="normal_text">Normal Text</option>
+            </select>
+          </div>
+          <div class="dropdown" title="align">
             <ul>
               <li>
                 <img
@@ -31,7 +36,7 @@
               <img src="images/toolbar/arrow-down.svg" alt="Arrow Down" />
             </ul>
           </div>
-          <div class="dropdown">
+          <div class="dropdown" title="color">
             <ul class="dropdown_colors">
               <li class="color_purple">
                 <div></div>
@@ -40,22 +45,28 @@
             </ul>
           </div>
           <div class="text_style">
-            <button onclick="addTagToHtmlText('b');createIdForChild();">
+            <button
+              title="bold"
+              onclick="addTagToHtmlText('b');createIdForChild();"
+            >
               B
             </button>
             <button
+              title="italic"
               class="text_style_italic"
               onclick="addTagToHtmlText('i');createIdForChild();"
             >
               I
             </button>
             <button
+              title="underline"
               class="text_style_underline"
               onclick="addTagToHtmlText('u');createIdForChild();"
             >
               U
             </button>
             <button
+              title="line through"
               class="text_style_line_through"
               onclick="addTagToHtmlText('s');createIdForChild();"
             >
@@ -63,13 +74,13 @@
             </button>
           </div>
           <div class="list">
-            <button>
+            <button title="unordered list">
               <img
                 src="images/toolbar/list/bulletted.svg"
                 alt="List Bulleted Icon"
               />
             </button>
-            <button>
+            <button title="ordered list">
               <img
                 src="images/toolbar/list/numbered.svg"
                 alt="List Numbered Icon"
@@ -77,24 +88,24 @@
             </button>
           </div>
           <div class="etc">
-            <button>
+            <button title="hyper link">
               <img src="images/toolbar/link.svg" alt="Link Icon" />
             </button>
-            <button>
+            <button title="image">
               <img src="images/toolbar/image.svg" alt="Image Icon" />
             </button>
-            <button>
+            <button title="code block">
               <img
                 src="images/toolbar/code_bracket.svg"
                 alt="Code Bracket Icon"
               />
             </button>
-            <button>
+            <button title="quote">
               <img src="images/toolbar/quotes.svg" alt="Quotes Icon" />
             </button>
-            <button>
+            <button title="horizontal line">
               <img
-                src="images/toolbar/horizontal_rule.svg"
+                src="images/toolbar/horizontal_line.svg"
                 alt="Horizontal Line Icon"
               />
             </button>
