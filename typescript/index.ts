@@ -15,32 +15,15 @@ let childIndex = 0;
 
 const divEditor = document.querySelector("#divEditor")! as HTMLDivElement;
 
-const getSelectedElement = () => {
-  let htmlElement: HTMLElement;
-  let childNode = currentHTMLElement.childNodes;
-
-  if (childNode.length == 1 && childNode[0].nodeName == "#text") {
-    htmlElement = editorHTMLElements[targetHTMLElementId];
-  } else {
-    htmlElement = document.getElementById(targetHTMLElementId);
-  }
-  return htmlElement;
-};
-
-divEditor.addEventListener("click", (event: Event) => {
-  if (!editorHTMLElements) return;
-  currentHTMLElement = editorHTMLElements[childIndex];
-
-  targetHTMLElementId = (event.target as HTMLElement).id;
-  selectedHtmlElement = getSelectedElement();
-});
-
-divEditor.addEventListener("mouseup", (event: Event) => {
+divEditor.addEventListener("mouseup", () => {
   document.addEventListener("selectionchange", () => {
-    textRange = window.getSelection()?.getRangeAt(0)!;
+    let selection = window.getSelection()!;
+
+    selectedHtmlElement = selection.focusNode.parentElement;
+    textRange = selection.getRangeAt(0)!;
     textStartIndex = textRange.startOffset;
     textEndIndex = textRange.endOffset;
-    selectedText = window.getSelection()?.toString()!;
+    selectedText = selection.toString()!;
   });
 });
 
