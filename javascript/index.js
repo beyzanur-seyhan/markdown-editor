@@ -43,6 +43,12 @@ const isSplitText = (textIndex) => {
     }
     return result;
 };
+const createHtmlElement = (text, tag) => {
+    const elementTag = text == selectedText ? tag : "span";
+    const createdHtmlElement = document.createElement(elementTag);
+    createdHtmlElement.innerHTML = text;
+    return createdHtmlElement;
+};
 const splitTextToSubArray = (tag) => {
     let str = "";
     let counter = 0;
@@ -51,10 +57,7 @@ const splitTextToSubArray = (tag) => {
     selectedHtmlElement.innerHTML = "";
     for (let i = 0; i < htmlText.length; i++) {
         str += htmlText[i];
-        let elementTag = str == selectedText ? tag : "span";
-        let createdHtmlElement = document.createElement(elementTag);
-        createdHtmlElement.innerHTML = str;
-        childNode[counter] = createdHtmlElement;
+        childNode[counter] = createHtmlElement(str, tag);
         if (!isSplitText(i))
             continue;
         str = "";
