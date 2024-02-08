@@ -4,9 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Markdown Editor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/index.css" />
     <script src="javascript/index.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/25942c7a88.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="editor_container">
@@ -14,26 +24,30 @@
         <div class="editor_toolbar">
           <div class="undo_redo">
             <button title="undo">
-              <img src="images/toolbar/undo.svg" alt="Undo Icon" />
+              <i class="fa-solid fa-rotate-left"></i>
             </button>
             <button title="redo">
-              <img src="images/toolbar/redo.svg" alt="Redo Icon" />
+              <i class="fa-solid fa-rotate-right"></i>
             </button>
           </div>
           <div class="dropdown">
-            <select name="" id="">
-              <option value="normal_text">Normal Text</option>
-            </select>
+            <ul>
+              <li>Normal Text</li>
+              <i class="fa-solid fa-chevron-down"></i>
+            </ul>
+          </div>
+          <div class="dropdown">
+            <ul>
+              <li>14</li>
+              <i class="fa-solid fa-chevron-down"></i>
+            </ul>
           </div>
           <div class="dropdown" title="align">
             <ul>
               <li>
-                <img
-                  src="images/toolbar/text_align/left.svg"
-                  alt="Text Align Left Icon"
-                />
+                <i class="fa-solid fa-align-left"></i>
               </li>
-              <img src="images/toolbar/arrow-down.svg" alt="Arrow Down" />
+              <i class="fa-solid fa-chevron-down"></i>
             </ul>
           </div>
           <div class="dropdown" title="color">
@@ -41,7 +55,15 @@
               <li class="color_purple">
                 <div></div>
               </li>
-              <img src="images/toolbar/arrow-down.svg" alt="Arrow Down" />
+              <i class="fa-solid fa-chevron-down"></i>
+            </ul>
+          </div>
+          <div class="dropdown" title="emoji">
+            <ul class="dropdown_emoji">
+              <li>
+                <i class="fa-solid fa-face-grin-wide"></i>
+              </li>
+              <i class="fa-solid fa-chevron-down"></i>
             </ul>
           </div>
           <div class="text_style">
@@ -75,39 +97,27 @@
           </div>
           <div class="list">
             <button title="unordered list">
-              <img
-                src="images/toolbar/list/bulletted.svg"
-                alt="List Bulleted Icon"
-              />
+              <i class="fa-solid fa-list-ul"></i>
             </button>
             <button title="ordered list">
-              <img
-                src="images/toolbar/list/numbered.svg"
-                alt="List Numbered Icon"
-              />
+              <i class="fa-solid fa-list-ol"></i>
             </button>
           </div>
           <div class="etc">
             <button title="hyper link">
-              <img src="images/toolbar/link.svg" alt="Link Icon" />
+              <i class="fa-solid fa-link"></i>
             </button>
             <button title="image">
-              <img src="images/toolbar/image.svg" alt="Image Icon" />
+              <i class="fa-regular fa-image"></i>
             </button>
             <button title="code block">
-              <img
-                src="images/toolbar/code_bracket.svg"
-                alt="Code Bracket Icon"
-              />
+              <i class="fa-solid fa-code"></i>
             </button>
             <button title="quote">
-              <img src="images/toolbar/quotes.svg" alt="Quotes Icon" />
+              <i class="fa-solid fa-quote-left"></i>
             </button>
             <button title="horizontal line">
-              <img
-                src="images/toolbar/horizontal_line.svg"
-                alt="Horizontal Line Icon"
-              />
+              <hr />
             </button>
           </div>
         </div>
@@ -116,8 +126,8 @@
       <div class="editor_right_area">
         <div class="output_toolbar">
           <button>
-            <img src="images/copy.svg" alt="Copy Icon" />
-            <span>Copy Text</span>
+            <i class="fa-solid fa-clone"></i>
+            <span>Copy</span>
           </button>
         </div>
         <div class="output"></div>
