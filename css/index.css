@@ -4,6 +4,20 @@
   --third_color: #a5a6f6;
 }
 
+i[class^="fa-"],
+hr {
+  color: var(--third_color);
+}
+
+hr {
+  width: 10px;
+  border: 1px solid var(--third_color);
+}
+
+i[class$="fa-chevron-down"] {
+  font-size: 12px;
+}
+
 html,
 body {
   height: 100%;
@@ -77,16 +91,14 @@ body {
   padding-right: 4px !important;
 }
 
-select {
-  color: var(--third_color);
-}
-
-.dropdown select {
+.dropdown > ul > li {
   font-size: 14px;
+  color: var(--third_color);
 }
 
 ul {
   display: flex;
+  align-items: center;
   column-gap: 5px;
 }
 
