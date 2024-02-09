@@ -91,7 +91,8 @@ body {
   padding-right: 4px !important;
 }
 
-.dropdown > ul > li {
+.dropdown > ul > li,
+.dropdown > ul > li > button {
   font-size: 14px;
   color: var(--third_color);
 }
@@ -158,6 +159,12 @@ ul {
   column-gap: 8px;
 }
 
+.etc button,
+.text_style button {
+  padding-right: 4px;
+  padding-left: 4px;
+}
+
 .etc button:last-child {
   display: flex;
   align-items: center;
@@ -179,4 +186,10 @@ ul {
 .output_toolbar button span {
   color: var(--third_color);
   font-size: 14px;
+}
+
+.dropdowns {
+  display: flex;
+  align-items: center;
+  column-gap: 2px;
 }
