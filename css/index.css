@@ -130,7 +130,7 @@ button:not(.dropdown):not(.undo_redo button):hover {
   border-radius: 4px;
 }
 
-.dropdown > ul > li,
+.dropdown > button,
 .dropdown > ul > li > button {
   font-size: 14px;
   color: var(--third_color);
@@ -142,18 +142,19 @@ ul {
   column-gap: 5px;
 }
 
-.dropdown_colors li {
-  width: 20px;
-  height: 20px;
-  border: 1px solid #212529;
-  border-radius: 4px;
+.colors button {
+  display: flex;
+  align-items: center;
+  column-gap: 2px;
 }
 
-.dropdown_colors li div {
+.color_purple {
   background-color: #5d5fef;
-  width: 19px;
-  height: 19px;
-  border-radius: inherit;
+  border: 1px solid #212529;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .text_style button {
