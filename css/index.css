@@ -39,14 +39,30 @@ body {
   outline-color: var(--third_color);
 }
 
+.dropdowns {
+  column-gap: 2px;
+}
+
+.dropdown {
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
 .dropdown,
 button:not(.dropdown) {
   cursor: pointer;
   transition: 0.4s background-color ease;
 }
 
+.text_style button,
+.list button,
+.etc button {
+  width: 28px;
+  height: 28px;
+}
+
 .dropdown:hover,
-button:not(.dropdown):hover {
+button:not(.dropdown):not(.undo_redo button):hover {
   background-color: var(--button_color);
   opacity: 46;
   transition: 0.4s background-color ease;
@@ -94,11 +110,6 @@ button:not(.dropdown):hover {
   align-items: center;
 }
 
-.editor_toolbar div {
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
 .undo_redo button {
   width: 20px;
   height: 20px;
@@ -110,6 +121,12 @@ button:not(.dropdown):hover {
   height: 26px;
   display: flex;
   align-items: center;
+}
+
+.dropdown,
+.text_style button,
+.list button,
+.etc button {
   border-radius: 4px;
 }
 
@@ -139,11 +156,6 @@ ul {
   border-radius: inherit;
 }
 
-.text_style {
-  display: flex;
-  column-gap: 2px;
-}
-
 .text_style button {
   color: var(--third_color);
   padding: 4px;
@@ -166,19 +178,15 @@ ul {
   font-weight: 200 !important;
 }
 
-.list {
+.text_style,
+.list,
+.etc {
   display: flex;
-  column-gap: 8px;
 }
 
 .list button img {
   width: 16.25px;
   height: 12.5px;
-}
-
-.etc {
-  display: flex;
-  column-gap: 8px;
 }
 
 .etc button,
