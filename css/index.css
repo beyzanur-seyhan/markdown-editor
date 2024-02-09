@@ -2,6 +2,8 @@
   --primary_color: #181817;
   --secondary_color: #141516;
   --third_color: #a5a6f6;
+
+  --button_color: #495057;
 }
 
 i[class^="fa-"],
@@ -35,6 +37,19 @@ body {
   overflow-x: hidden;
   color: var(--third_color);
   outline-color: var(--third_color);
+}
+
+.dropdown,
+button:not(.dropdown) {
+  cursor: pointer;
+  transition: 0.4s background-color ease;
+}
+
+.dropdown:hover,
+button:not(.dropdown):hover {
+  background-color: var(--button_color);
+  opacity: 46;
+  transition: 0.4s background-color ease;
 }
 
 .editor_container {
@@ -89,6 +104,13 @@ body {
   height: 20px;
   padding-left: 4px !important;
   padding-right: 4px !important;
+}
+
+.dropdown {
+  height: 26px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
 }
 
 .dropdown > ul > li,
