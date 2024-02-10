@@ -62,7 +62,7 @@ button:not(.dropdown) {
 }
 
 .dropdown:hover,
-button:not(.dropdown):not(.undo_redo button):hover {
+button:not(.dropdown):not(.undo_redo button):not(.output_toolbar button):hover {
   background-color: var(--button_color);
   opacity: 46;
   transition: 0.4s background-color ease;
