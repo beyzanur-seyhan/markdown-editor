@@ -17,7 +17,7 @@ hr {
   border: 1px solid var(--third_color);
 }
 
-i[class$="fa-chevron-down"] {
+i[class*="fa-chevron-"] {
   font-size: 12px;
 }
 
@@ -50,7 +50,7 @@ body {
 }
 
 .dropdown,
-button:not(.dropdown) {
+button:not(.dropdown):not(.subtitle button) {
   cursor: pointer;
   transition: 0.4s background-color ease;
 }
@@ -63,7 +63,9 @@ button:not(.dropdown) {
 }
 
 .dropdown:hover,
-button:not(.dropdown):not(.undo_redo button):not(.output_toolbar button):hover {
+button:not(.dropdown):not(.subtitle button):not(.undo_redo button):not(
+    .output_toolbar button
+  ):hover {
   background-color: var(--button_color);
   opacity: 46;
   transition: 0.4s background-color ease;
@@ -127,6 +129,10 @@ button:not(.dropdown):not(.undo_redo button):not(.output_toolbar button):hover {
   position: relative;
 }
 
+.dropdown:first-child button i {
+  padding: 4px;
+}
+
 .dropdown,
 .text_style button,
 .list button,
@@ -144,7 +150,9 @@ ul {
   display: none;
   position: absolute;
   width: 110px;
-  height: max-content;
+  height: 151px;
+  overflow-y: auto;
+  overflow-x: hidden;
   top: 34px;
   left: 0px;
   background-color: var(--dropdown_color);
@@ -174,9 +182,38 @@ ul li:hover {
   background-color: #373e45;
 }
 
+.normal_text {
+  font-size: 14px;
+  line-height: 150%;
+}
+
 .subtitle {
   position: relative;
   width: 110px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 125%;
+}
+
+.subtitle button span,
+.subtitle ul li {
+  font-weight: bold;
+}
+
+.subtitle button {
+  display: flex;
+  align-items: center;
+  column-gap: 32px;
+  cursor: pointer;
+}
+
+.subtitle button i {
+  padding: 0px !important;
+}
+
+.subtitle span {
+  width: max-content;
 }
 
 .subtitle ul {
@@ -185,6 +222,24 @@ ul li:hover {
   height: max-content;
   top: 0;
   left: 112px;
+}
+
+.subtitle_1,
+.subtitle_2,
+.subtitle_3 {
+  line-height: 150%;
+}
+
+.subtitle_1 {
+  font-size: 13px;
+}
+
+.subtitle_2 {
+  font-size: 11px;
+}
+
+.subtitle_3 {
+  font-size: 10px;
 }
 
 .colors button {
