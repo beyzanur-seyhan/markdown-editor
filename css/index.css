@@ -4,6 +4,7 @@
   --third_color: #a5a6f6;
 
   --button_color: #495057;
+  --dropdown_color: #2c3034;
 }
 
 i[class^="fa-"],
@@ -120,7 +121,10 @@ button:not(.dropdown):not(.undo_redo button):not(.output_toolbar button):hover {
 .dropdown {
   height: 26px;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .dropdown,
@@ -137,9 +141,50 @@ button:not(.dropdown):not(.undo_redo button):not(.output_toolbar button):hover {
 }
 
 ul {
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
+  display: none;
+  position: absolute;
+  width: 110px;
+  height: max-content;
+  top: 34px;
+  left: 0px;
+  background-color: var(--dropdown_color);
+  border-radius: 4px;
+  padding: 4px 0;
+}
+
+.dropdown:hover ul {
+  display: block;
+}
+
+ul,
+ul li,
+ul li button {
+  color: var(--third_color);
+}
+
+ul li {
+  padding: 4px 8px;
+}
+
+ul li:not(ul li:first-child) {
+  margin-top: 4px;
+}
+
+ul li:hover {
+  background-color: #373e45;
+}
+
+.subtitle {
+  position: relative;
+  width: 110px;
+}
+
+.subtitle ul {
+  position: absolute;
+  width: 110px;
+  height: max-content;
+  top: 0;
+  left: 112px;
 }
 
 .colors button {
