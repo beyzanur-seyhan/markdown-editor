@@ -122,6 +122,7 @@ button:not(.dropdown):not(.subtitle button):not(.undo_redo button):not(
 
 .dropdown {
   height: 26px;
+  width: max-content;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -149,13 +150,21 @@ button:not(.dropdown):not(.subtitle button):not(.undo_redo button):not(
 ul {
   display: none;
   position: absolute;
-  width: 223px;
   height: max-content;
+  width: inherit;
   overflow-y: auto;
   top: 34px;
   left: 0px;
   border-radius: 4px;
   padding: 4px 0;
+}
+
+.dropdown ul:not(.dropdown:first-child ul) {
+  background-color: var(--dropdown_color);
+}
+
+.dropdown:first-child ul {
+  width: 223px;
 }
 
 .dropdown:hover ul {
@@ -170,9 +179,18 @@ ul li button {
 
 ul li {
   padding: 4px;
-  width: 110px;
   box-sizing: border-box;
+}
+
+.dropdown:first-child ul li {
+  width: 110px;
   background-color: var(--dropdown_color);
+}
+
+.dropdown
+  ul
+  li:not(.dropdown ul li:first-child):not(.dropdown:first-child ul li) {
+  margin-top: 4px;
 }
 
 .dropdown ul li:first-child:not(.subtitle ul li:first-child) {
@@ -277,6 +295,31 @@ li[class*="heading"] {
 
 .heading_3 {
   font-size: 14px;
+}
+
+.dropdown_font_size {
+  height: 99px;
+  top: 38px;
+}
+
+.dropdown_font_size li {
+  text-align: center;
+}
+
+.dropdown_font_size::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dropdown_font_size::-webkit-scrollbar-track {
+  background-color: #43494f;
+}
+
+.dropdown_font_size::-webkit-scrollbar-thumb {
+  background-color: #575f66;
+}
+
+.dropdown_font_size::-webkit-scrollbar-thumb:hover {
+  background-color: #444a50;
 }
 
 .colors button {
