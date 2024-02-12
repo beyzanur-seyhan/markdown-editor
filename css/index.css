@@ -187,6 +187,15 @@ ul li {
   background-color: var(--dropdown_color);
 }
 
+.dropdown:not(.dropdown:first-child) ul {
+  width: -webkit-fill-available;
+  top: 38px;
+}
+
+.dropdown:not(.dropdown:first-child) ul li {
+  text-align: center;
+}
+
 .dropdown
   ul
   li:not(.dropdown ul li:first-child):not(.dropdown:first-child ul li) {
@@ -197,7 +206,7 @@ ul li {
   border-radius: 4px 4px 0px 0px;
 }
 
-.dropdown:not(.dropdown:first-child) li {
+.dropdown:not(.dropdown:first-child):not(.text_align) li {
   border-radius: 4px;
 }
 
@@ -303,7 +312,6 @@ li[class*="heading"] {
 
 .dropdown_font_size {
   height: 99px;
-  top: 38px;
   padding-left: 4px;
   padding-right: 4px;
 }
