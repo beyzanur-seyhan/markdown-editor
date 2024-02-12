@@ -149,13 +149,11 @@ button:not(.dropdown):not(.subtitle button):not(.undo_redo button):not(
 ul {
   display: none;
   position: absolute;
-  width: 110px;
-  height: 151px;
+  width: 223px;
+  height: max-content;
   overflow-y: auto;
-  overflow-x: hidden;
   top: 34px;
   left: 0px;
-  background-color: var(--dropdown_color);
   border-radius: 4px;
   padding: 4px 0;
 }
@@ -171,11 +169,18 @@ ul li button {
 }
 
 ul li {
-  padding: 4px 8px;
+  padding: 4px;
+  width: 110px;
+  box-sizing: border-box;
+  background-color: var(--dropdown_color);
 }
 
-ul li:not(ul li:first-child) {
-  margin-top: 4px;
+.dropdown ul li:first-child:not(.subtitle ul li:first-child) {
+  border-radius: 4px 4px 0px 0px;
+}
+
+.dropdown ul li:last-child:not(.subtitle ul li:last-child) {
+  border-radius: 0px 0px 4px 4px;
 }
 
 ul li:hover {
@@ -194,6 +199,10 @@ ul li:hover {
   cursor: pointer;
   font-size: 15px;
   line-height: 125%;
+}
+
+.subtitle:hover ul {
+  display: block !important;
 }
 
 .subtitle button span,
@@ -220,8 +229,15 @@ ul li:hover {
   position: absolute;
   width: 110px;
   height: max-content;
-  top: 0;
+  top: -4px;
   left: 112px;
+  border-radius: 4px;
+  display: none !important;
+  background-color: var(--dropdown_color);
+}
+
+.subtitle ul li {
+  background-color: none;
 }
 
 .subtitle_1,
@@ -240,6 +256,27 @@ ul li:hover {
 
 .subtitle_3 {
   font-size: 10px;
+}
+
+li[class*="heading"] {
+  font-weight: bold;
+  line-height: 125%;
+}
+
+.heading {
+  font-size: 24px;
+}
+
+.heading_1 {
+  font-size: 20px;
+}
+
+.heading_2 {
+  font-size: 16px;
+}
+
+.heading_3 {
+  font-size: 14px;
 }
 
 .colors button {
