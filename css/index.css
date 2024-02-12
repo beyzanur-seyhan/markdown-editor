@@ -193,8 +193,12 @@ ul li {
   margin-top: 4px;
 }
 
-.dropdown ul li:first-child:not(.subtitle ul li:first-child) {
+.dropdown:first-child ul li:first-child:not(.subtitle ul li:first-child) {
   border-radius: 4px 4px 0px 0px;
+}
+
+.dropdown:not(.dropdown:first-child) li {
+  border-radius: 4px;
 }
 
 .dropdown ul li:last-child:not(.subtitle ul li:last-child) {
@@ -300,6 +304,8 @@ li[class*="heading"] {
 .dropdown_font_size {
   height: 99px;
   top: 38px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .dropdown_font_size li {
