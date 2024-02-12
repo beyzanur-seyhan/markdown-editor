@@ -314,6 +314,11 @@ li[class*="heading"] {
   background-color: #43494f;
 }
 
+.dropdown_font_size::-webkit-scrollbar-track,
+.dropdown_font_size::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+
 .dropdown_font_size::-webkit-scrollbar-thumb {
   background-color: #575f66;
 }
