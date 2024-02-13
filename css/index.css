@@ -177,7 +177,7 @@ ul li button {
   color: var(--third_color);
 }
 
-ul li {
+ul:not(.dropdown_colors) li {
   padding: 4px;
   box-sizing: border-box;
 }
@@ -214,7 +214,7 @@ ul li {
   border-radius: 0px 0px 4px 4px;
 }
 
-ul li:hover {
+ul:not(.dropdown_colors) li:hover {
   background-color: #373e45;
 }
 
@@ -339,6 +339,108 @@ li[class*="heading"] {
 
 .dropdown_font_size::-webkit-scrollbar-thumb:hover {
   background-color: #444a50;
+}
+
+.dropdown_colors {
+  width: 206px !important;
+  padding: 8px 4px;
+}
+
+.dropdown_colors li:not(.dropdown_colors li:last-child) a {
+  margin-right: 4px;
+}
+
+.dropdown_colors li:first-child {
+  margin-bottom: 4px;
+}
+
+.dropdown_colors input {
+  appearance: none;
+  margin: 0px;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdown_color_black {
+  background-color: #212529;
+  border: 1px solid #515a64;
+}
+
+.dropdown_color_light_purple {
+  background-color: #845ef7;
+  border: 1px solid #845ef7;
+}
+
+.dropdown_color_light_blue {
+  background-color: #339af0;
+  border: 1px solid #339af0;
+}
+
+.dropdown_color_cyan {
+  background-color: #22b8cf;
+  border: 1px solid #22b8cf;
+}
+
+.dropdown_color_light_green {
+  background-color: #51cf66;
+  border: 1px solid #51cf66;
+}
+
+.dropdown_color_light_orange {
+  background-color: #fcc419;
+  border: 1px solid #fcc419;
+}
+
+.dropdown_color_light_red {
+  background-color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+.dropdown_color_light_pink {
+  background-color: #f06595;
+  border: 1px solid #f06595;
+}
+
+.dropdown_color_white {
+  background-color: #ced4da;
+  border: 1px solid #ced4da;
+}
+
+.dropdown_color_purple {
+  background-color: #5f3dc4;
+  border: 1px solid #5f3dc4;
+}
+
+.dropdown_color_blue {
+  background-color: #1864ab;
+  border: 1px solid #1864ab;
+}
+
+.dropdown_color_dark_cyan {
+  background-color: #0b7285;
+  border: 1px solid #0b7285;
+}
+
+.dropdown_color_green {
+  background-color: #2b8a3e;
+  border: 1px solid #2b8a3e;
+}
+
+.dropdown_color_orange {
+  background-color: #e67700;
+  border: 1px solid #e67700;
+}
+
+.dropdown_color_red {
+  background-color: #c92a2a;
+  border: 1px solid #c92a2a;
+}
+
+.dropdown_color_pink {
+  background-color: #c2255c;
+  border: 1px solid #c2255c;
 }
 
 .colors button {
