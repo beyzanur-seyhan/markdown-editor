@@ -3,7 +3,7 @@
   --secondary_color: #141516;
   --third_color: #a5a6f6;
 
-  --button_color: #495057;
+  --color_gray: #495057;
   --dropdown_color: #2c3034;
 }
 
@@ -66,7 +66,7 @@ button:not(.dropdown):not(.subtitle button) {
 button:not(.dropdown):not(.subtitle button):not(.undo_redo button):not(
     .output_toolbar button
   ):hover {
-  background-color: var(--button_color);
+  background-color: var(--color_gray);
   opacity: 46;
   transition: 0.4s background-color ease;
 }
@@ -446,20 +446,33 @@ li[class*="heading"] {
 }
 
 .dropdown_emoji {
-  width: 61px;
+  width: 88px;
   height: 98px;
+  background-color: var(--dropdown_color);
+  padding: 1px;
 }
 
 .dropdown_emoji input {
   appearance: none;
-  width: 59px;
+  width: -webkit-fill-available;
   height: 23px;
-  font-size: 10px;
+  font-size: 12px;
   border: none;
+  border-radius: 4px;
+  padding: 4px;
+  background-color: #3a3f44;
 }
 
-.dropdown_emoji_searchbar {
-  display: flex;
+.dropdown_emoji input::placeholder {
+  color: var(--third_color);
+}
+
+.dropdown_emoji ul {
+  top: 0px !important;
+  border-radius: 0px !important;
+  position: relative !important;
+  background: none !important;
+  padding: 6px;
 }
 
 .colors button {
