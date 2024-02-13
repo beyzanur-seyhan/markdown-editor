@@ -147,7 +147,8 @@ button:not(.dropdown):not(.subtitle button):not(.undo_redo button):not(
   color: var(--third_color);
 }
 
-ul {
+ul,
+.dropdown_emoji {
   display: none;
   position: absolute;
   height: max-content;
@@ -167,7 +168,8 @@ ul {
   width: 223px;
 }
 
-.dropdown:hover ul {
+.dropdown:hover ul,
+.dropdown:hover .dropdown_emoji {
   display: block;
 }
 
@@ -441,6 +443,23 @@ li[class*="heading"] {
 .dropdown_color_pink {
   background-color: #c2255c;
   border: 1px solid #c2255c;
+}
+
+.dropdown_emoji {
+  width: 61px;
+  height: 98px;
+}
+
+.dropdown_emoji input {
+  appearance: none;
+  width: 59px;
+  height: 23px;
+  font-size: 10px;
+  border: none;
+}
+
+.dropdown_emoji_searchbar {
+  display: flex;
 }
 
 .colors button {
