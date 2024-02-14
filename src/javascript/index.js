@@ -1,6 +1,7 @@
 let currentHTMLElement;
 let editorHTMLElements;
 let selectedHtmlElement;
+let githubEmojis = [];
 let textStartIndex;
 let textEndIndex;
 let targetHTMLElementId;
@@ -10,6 +11,20 @@ let childIndexCounter = 0;
 let indexCounter = 0;
 let childIndex = 0;
 const divEditor = document.querySelector("#divEditor");
+const githubEmojiKey = "24e2c24d34bdff2c64ee138e9a3adafd9af71b08";
+const githubEmojiApi = `https://emoji-api.com/emojis?access_key=${githubEmojiKey}`;
+fetch(githubEmojiApi)
+    .then((response) => response.json())
+    .then((githubEmoji) => loadGihubEmoji(githubEmoji));
+const loadGihubEmoji = (emojis) => {
+    emojis === null || emojis === void 0 ? void 0 : emojis.forEach((emoji, index) => {
+        if (emoji.character == "🫂")
+            console.log(index);
+        const li = document.createElement("li");
+        li.innerHTML = emoji.character;
+        document.getElementById("emojis").appendChild(li);
+    });
+};
 divEditor.addEventListener("mouseup", () => {
     document.addEventListener("selectionchange", () => {
         let selection = window.getSelection();
